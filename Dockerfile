@@ -1,10 +1,6 @@
-FROM lsiobase/alpine:3.7
+FROM woahbase/alpine-s6:x86_64
 
-# set version label
-ARG BUILD_DATE
-ARG VERSION
-LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DATE}"
-LABEL maintainer="sparklyballs"
+LABEL maintainer="horjulf"
 
 # copy patches
 COPY patches/ /defaults/patches/
@@ -13,7 +9,10 @@ COPY patches/ /defaults/patches/
 RUN \
  echo "**** install packages ****" && \
  apk add --no-cache -U \
+	bash \
 	ca-certificates \
+	coreutils \
+	shadow \
 	curl \
 	fcgi \
 	ffmpeg \
@@ -31,7 +30,7 @@ RUN \
 	perl-json \
 	perl-net-ssleay \
 	perl-xml-libxml \
-  python3 \
+	python3 \
 	php7 \
 	php7-cgi \
 	php7-fpm \
@@ -46,13 +45,23 @@ RUN \
 	unrar \
 	unzip \
 	wget \
+	tzdata \
 	git \
 	zlib \
-	zip && \
+	zip \
+	xz && \
  apk add --no-cache -U --repository http://nl.alpinelinux.org/alpine/edge/testing \
 	perl-json-xs && \
  echo "**** setup python pip dependencies ****" && \
  python3 -m pip install --no-cache-dir -U pip setuptools requests urllib3 && \
+ echo "**** create abc user and make the folders ****" && \
+ groupmod -g 1000 users && \
+ useradd -u 911 -U -d /config -s /bin/false abc && \
+ usermod -G users abc && \
+ mkdir -p \
+	/app \
+	/config \
+	/defaults && \
  echo "**** install webui ****" && \
  mkdir -p \
 	/usr/share/webapps/rutorrent \
@@ -88,3 +97,5 @@ ENV \
 # ports and volumes
 EXPOSE 80
 VOLUME /config /downloads
+
+ENTRYPOINT ["/init"]
