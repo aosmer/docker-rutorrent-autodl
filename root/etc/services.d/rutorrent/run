@@ -18,7 +18,7 @@ trap _term SIGTERM
 
 RTORRENT_LOCK="/detach_sess/.rtorrent"
 # Check if session lock wasn't deleted
-if [ -f ${RTORRENT_LOCK} ] && ! pgrep rtorrent > /dev/null; then
+if [ -S ${RTORRENT_LOCK} ] && ! pgrep rtorrent > /dev/null; then
 	echo "# Removing rtorrent session lock ${RTORRENT_LOCK}"
 	rm -f ${RTORRENT_LOCK}
 fi

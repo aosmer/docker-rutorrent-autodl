@@ -9,7 +9,7 @@ trap _term SIGTERM
 
 AUTODL_LOCK="/detach_sess/.autodl"
 # Check if session lock wasn't deleted
-if [ -f ${AUTODL_LOCK} ] && ! pgrep -q irssi; then
+if [ -S ${AUTODL_LOCK} ] && ! pgrep -q irssi; then
 	echo "# Removing irssi/autodl session lock ${AUTODL_LOCK}"
 	rm -f ${AUTODL_LOCK}
 fi
