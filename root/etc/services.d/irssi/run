@@ -17,6 +17,6 @@ fi
 HOME=/config dtach -N ${AUTODL_LOCK} \
 	s6-setuidgid abc /usr/bin/irssi --home=/config/.irssi &
 
-wait
+wait $!
 
 sleep 1s
