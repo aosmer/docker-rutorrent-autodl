@@ -31,9 +31,10 @@ dtach -N ${RTORRENT_LOCK} \
 		-n -o import=/config/rtorrent/rtorrent.rc &
 
 DTACH_PID=$!
+sleep 1
 
 echo "# rtorrent waiting for ${DTACH_PID}"
 wait ${DTACH_PID}
 echo "# rtorrent waited for ${DTACH_PID}"
 
-sleep 1s
+sleep 1

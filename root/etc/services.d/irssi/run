@@ -19,4 +19,4 @@ HOME=/config dtach -N ${AUTODL_LOCK} \
 
 wait $!
 
-sleep 1s
+sleep 1
