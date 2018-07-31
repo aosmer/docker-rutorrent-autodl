@@ -25,7 +25,6 @@ if [ -S "${RTORRENT_LOCK}" ] && ! pgrep rtorrent > /dev/null; then
 fi
 
 echo "# Starting rtorrent."
-
 dtach -N "${RTORRENT_LOCK}" \
 	s6-setuidgid abc /usr/bin/rtorrent \
 		-n -o import=/config/rtorrent/rtorrent.rc &
