@@ -9,12 +9,12 @@ trap _term SIGTERM
 
 AUTODL_LOCK="/detach_sess/.autodl"
 # Check if session lock wasn't deleted
-if [ -S ${AUTODL_LOCK} ] && ! pgrep irssi > /dev/null; then
+if [ -S "${AUTODL_LOCK}" ] && ! pgrep irssi > /dev/null; then
 	echo "# Removing irssi/autodl session lock ${AUTODL_LOCK}"
-	rm -f ${AUTODL_LOCK}
+	rm -f "${AUTODL_LOCK}"
 fi
 
-HOME=/config dtach -N ${AUTODL_LOCK} \
+HOME=/config dtach -N "${AUTODL_LOCK}" \
 	s6-setuidgid abc /usr/bin/irssi --home=/config/.irssi &
 
 DTACH_PID=$!
