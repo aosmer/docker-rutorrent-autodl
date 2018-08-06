@@ -6,11 +6,9 @@ _term() {
 	sleep 1
 }
 
-trap _term SIGTERM
+	trap _term SIGTERM
 
-HOME=/config dtach -N /detach_sess/.autodl \
-	s6-setuidgid abc /usr/bin/irssi --home=/config/.irssi &
+	HOME=/config screen -D -m -S autodl \
+		s6-setuidgid abc /usr/bin/irssi --home=/config/.irssi &
 
 wait
-
-sleep 1s
